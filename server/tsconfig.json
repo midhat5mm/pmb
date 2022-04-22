@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "rootDir": "server",
+    "lib": ["esnext"],
+    "strict": true
+  },
+  "include": ["server/src/**/*"]
+}
