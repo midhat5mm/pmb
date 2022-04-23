@@ -1,0 +1,21 @@
+.container{
+    background-color: red;
+    margin: 20vh 20vw
+}
+
+.card{
+    min-width: 15vw;
+    min-height: 10vh;
+
+    background-color: blue;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.card div {
+    background-color: green;
+    display: flex;
+    align-items: stretch;
+}
