@@ -1,9 +1,11 @@
 # Server start:
 cd server
+npm install
 npm start
 
 # Client start
 cd client
+npm install
 npm start
 
 # Hasura Start:
@@ -31,3 +33,4 @@ hasura migrate create "init" --from-server --database-name default --admin-secre
 
 # mark the migration as applied in the server
 hasura migrate apply --version "1650703892450" --skip-execution --database-name default
+
