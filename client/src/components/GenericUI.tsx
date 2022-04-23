@@ -6,7 +6,7 @@ import './Styling.css'
 interface IProps {
     loading: boolean
     error: ApolloError | undefined
-    icon: string
+    icon: React.ReactNode
     text: string
     children: React.ReactNode
 }
@@ -14,12 +14,14 @@ const GenericUI = (props: IProps) => {
     const {loading, error, icon, text, children} = props
   return (
     <div className='card'>
-      <Loading loading={loading} error={error}>
-          <div>{icon}</div>
-          <div>{children}</div>
-          <div>{text}</div>
-      </Loading>
-    </div>
+    <div>{icon}</div>
+    <Loading loading={loading} error={error}>
+      <div>{children}</div>
+    </Loading>
+    <div className='card-text'>{text}</div>
+  </div>
+   
+    
   )
 }
 

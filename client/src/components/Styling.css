@@ -1,21 +1,55 @@
-.container{
-    background-color: red;
+.parents{
     margin: 20vh 20vw
 }
 
-.card{
-    min-width: 15vw;
-    min-height: 10vh;
+.container{
+    background-color: rgb(197, 225, 235);
+    width: 100vw;
+    height: 100vh;
+    padding: 5vh 10vw;
+}
 
-    background-color: blue;
+.card{
+    background-color: white;
     display: flex;
 
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    margin: 1vh;
+    border-radius: 20px;
+    box-shadow: 2px 2px grey;
 }
 
 .card div {
-    background-color: green;
+    min-height: 7vh;
     display: flex;
-    align-items: stretch;
+    justify-content: center;
+    align-items: center;
+}
+
+.users-toggle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.users-toggle .users-toggle-button{
+    margin: 1vh;
+}
+
+.card-text{
+    font-size: 2vh;
+    font-weight: 500;
+}
+
+.widget-result{
+    font-size: 4vh;
+    font-weight: 700;
+}
+
+.widget-result-hours{
+    font-size: 2vh;
+    font-weight: 400;
 }

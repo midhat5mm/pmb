@@ -6,8 +6,9 @@ import GenericUI from './GenericUI';
 import  ChallengesCompletedWeek  from './ChallengesCompletedWeek';
 import './Styling.css'
 import { useParams } from 'react-router-dom';
+import { CalendarOutlined, ClockCircleOutlined, FireOutlined, TrophyOutlined } from '@ant-design/icons';
 
-
+const iconStyle = { fontSize: '5vh'}
 // const userById = gql`
 //   query user($id: Int!) {
 //     user(
@@ -28,12 +29,12 @@ const parentsData = gql`
     parent_user( where: {parent_id: {_eq: $id}}, limit: 10){
         id
         user{
-        id
-        target_sat_score,
-        sat_exam_date
-        total_time_spent
-        }
-  }
+          id
+          target_sat_score,
+          sat_exam_date
+          total_time_spent
+       }
+    }
   }
 `;
 
@@ -51,7 +52,7 @@ const renderDaysUntilExamData = (userData: QUserById) => {
     }
 
     const duration = moment.duration(moment(userData.sat_exam_date).diff(moment()));
-    return <>{Math.floor(duration.asDays())}</>
+    return <div className='widget-result'>{Math.floor(duration.asDays())}</div>
 }
 
 const renderTargetSatScore = (userData: QUserById) => {
@@ -59,7 +60,7 @@ const renderTargetSatScore = (userData: QUserById) => {
     return null;
   }
 
-  return <>{Math.round(userData.target_sat_score/ 10) * 10}</>
+  return <div className='widget-result'>{Math.round(userData.target_sat_score/ 10) * 10}+</div>
 }
 
 const renderStudyTime = (userData: QUserById) => {
@@ -74,7 +75,7 @@ const renderStudyTime = (userData: QUserById) => {
   const hours = totalHours < 10 ? `0${Math.floor(totalHours)}`: Math.floor(totalHours)
   const minutes = Math.floor(remaining/60)
 
-  return <>{`${hours}: ${minutes} `}</>
+  return <div><div className='widget-result'>{`${hours}:${minutes} `}</div><div className='widget-result-hours'> hrs</div></div>
 }
 
 const UserData = () => {
@@ -93,14 +94,20 @@ const UserData = () => {
 
     return (
       <>
-      {data?.parent_user?.map((user:any, index: number) => <Button onClick={() => selectUserIndex(index)}>User id:{user.user.id}</Button>)}
+
       <div className='container'>
+        <div className='users-toggle'>
+          <h1>Toogle betwen users:</h1>
+          <div>
+            {data?.parent_user?.map((user:any, index: number) => <Button className='users-toggle-button' onClick={() => selectUserIndex(index)}>User id: {user.user.id}</Button>)}
+          </div>
+        </div>
         <Row >
           <Col span={12}>
             <GenericUI text="DAYS UNTIL EXAM" 
               loading={loading} 
               error={error}   
-              icon="futja" 
+              icon={<CalendarOutlined style={iconStyle}/>}
             >
               <>{renderDaysUntilExamData(userData)}</>
             </ GenericUI>
@@ -109,7 +116,7 @@ const UserData = () => {
             <GenericUI text="TARGET SAT SCORE" 
               loading={loading} 
               error={error}   
-              icon="futja" 
+              icon={<FireOutlined style={iconStyle}/>}
             >
               <>{renderTargetSatScore(userData)}</>
             </ GenericUI>
@@ -118,14 +125,14 @@ const UserData = () => {
         <Row>
           <Col span={12}>
             <ChallengesCompletedWeek text="CHALLENGES COMPLETED THIS WEEK" 
-              icon="futja"
+              icon={<TrophyOutlined style={iconStyle}/>}
             />
           </Col>
           <Col span={12}>
             <GenericUI text="TOTAL STUDY TIME ONE EVERYDAE" 
               loading={loading} 
               error={error}   
-              icon="futja" 
+              icon={<ClockCircleOutlined style={iconStyle}/>}
             >
               <>{renderStudyTime(userData)}</>
             </ GenericUI>

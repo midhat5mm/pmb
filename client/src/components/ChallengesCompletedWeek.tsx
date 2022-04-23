@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import GenericUI from './GenericUI';
 
 interface IProps {
-    icon: string
+    icon: React.ReactNode
     text: string
 }
 const queryChallengesCompletedWeek = gql`
@@ -33,7 +33,7 @@ const ChallengesCompletedWeek = (props: IProps) => {
                 error={error}   
                 icon={icon}
               >
-                <>{<>{data?.challenges_completed_week?.count || 0}</>}</>
+                <>{<div className='widget-result'>{data?.challenges_completed_week?.count || 0}</div>}</>
       </ GenericUI>
     </>
   )
