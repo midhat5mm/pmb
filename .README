@@ -15,7 +15,7 @@ docker-compose up -d
 hasura migrate create "init" --from-server --database-name default --admin-secret 'myadminsecretkey'
 
 # mark the migration as applied in the server
-hasura migrate apply --version "1650694496659" --skip-execution --database-name default
+hasura migrate apply --version "1650703892450" --skip-execution --database-name default
 
 hasura migrate apply
 hasura metadata apply
@@ -35,33 +35,3 @@ hasura migrate apply --all-databases --endpoint http://localhost:8080 --admin-se
 hasura metadata reload --endpoint http://localhost:8080 --admin-secret 'myadminsecretkey'
 
 hasura console --admin-secret 'myadminsecretkey'
-
-
-
-// {
-//     "table": {
-//       "name": {{$body.table.name}},
-//       "schema": {{$body.table.schema}}
-//     },
-//     "old": {{$body.event.data.old}},
-//     "new": {{$body.event.data.new}}
-  
-//   }
-
-
-//   2022-04-24T14:00:00+00:00
-
-
-// mutation m {
-//     update_challenge_user(where: {id: {_eq: 321}}, _set: {stop_time: "2022-05-07T14:00:00+00:00"}, ) {
-//       affected_rows
-//       returning {
-//         challenge_id
-//         completed_at_time
-//         id
-//         start_time
-//         stop_time
-//         user_id
-//       }
-//     }
-//   }

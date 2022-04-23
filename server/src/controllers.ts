@@ -84,10 +84,52 @@ export const  userTimeSpentController = async(req, res) => {
         res.send(400);
     }
 
-    // update total_time_spent
+    // update user total_time_spent
     await executeHasuraRequest({ id: user_id, total_time_spent: userTotalTimeSpent +  differenceInSeconds  }, req.headers, HASURA_UPATE_USER);
 
     res.send(200);
 }
 
-  
+
+
+
+const USER_CHALLENGES_COMPLETED_WEEK = `
+query ($id: Int!, $comparisonCompletedTime: timestamptz!) {
+    challenge_user(where: {
+        user_id: {
+          _eq: $id
+        },
+        completed_at_time: {
+          _gte: $comparisonCompletedTime
+        }
+      }){
+        id
+        completed_at_time
+      }
+}
+`;
+
+const DAYS_BEOFRE = 7;
+export const challengesCompletedController = async(req, res) => {
+    const { id: userId } = req.body;
+
+    if(!userId){
+        res.send(400);
+    }
+
+    const beforeComparisonTime = moment().subtract(DAYS_BEOFRE,'d').format('YYYY-MM-DDTHH:mm:ss')
+
+    const queryData = await executeHasuraRequest({ 
+        id: userId, 
+        comparisonCompletedTime:  beforeComparisonTime
+    }, req.headers, USER_CHALLENGES_COMPLETED_WEEK);
+
+
+    const challengesCompleted = Array.isArray(queryData?.data?.challenge_user) && queryData.data.challenge_user 
+
+    if (!challengesCompleted){
+        res.send(400);
+    }
+
+    res.status(200).json({count: challengesCompleted.length})
+}

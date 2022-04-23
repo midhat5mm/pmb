@@ -1,0 +1,24 @@
+table:
+  schema: public
+  name: challenge_user
+event_triggers:
+  - name: user_time_spent
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - completed_at_time
+          - stop_time
+    retry_conf:
+      num_retries: 0
+      interval_sec: 10
+      timeout_sec: 60
+    webhook: http://host.docker.internal:4000/user_time_spent
+    request_transform:
+      body:
+        action: transform
+        template: "{\r\n    \"table\": {\r\n      \"name\": {{$body.table.name}},\r\n      \"schema\": {{$body.table.schema}}\r\n    },\r\n    \"old\": {{$body.event.data.old}},\r\n    \"new\": {{$body.event.data.new}}\r\n  \r\n  }"
+      version: 2
+      template_engine: Kriti

@@ -1,0 +1,10 @@
+type Query {
+  challenges_completed_week(
+    id: Int!
+  ): ChallangesCount!
+}
+
+type ChallangesCount {
+  count: Int!
+}
+

@@ -1,0 +1,4 @@
+- "!include public_challenge_user.yaml"
+- "!include public_challenges.yaml"
+- "!include public_parent_user.yaml"
+- "!include public_user.yaml"
